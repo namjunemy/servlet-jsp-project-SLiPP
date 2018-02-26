@@ -8,9 +8,9 @@
   String password = request.getParameter("password");
   String name = request.getParameter("name");
   String email = request.getParameter("email");
-  
+
   User user = new User(userId, password, name, email);
   Database.addUser(user);
-  
+
   response.sendRedirect("/");
 %>
