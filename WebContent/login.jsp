@@ -19,6 +19,17 @@
 
 
         <form class="form-horizontal" action="/login_action.jsp" method="post">
+          <%
+          Object errorMessage = request.getAttribute("errorMessage");
+          if (errorMessage != null) {
+          %>
+          <div class="control-group">
+            <label class="error"><%= errorMessage %></label>
+          </div>
+          <%
+          }
+          %>
+          
           <div class="control-group">
             <label class="control-label" for="userId">사용자 아이디</label>
             <div class="controls">
