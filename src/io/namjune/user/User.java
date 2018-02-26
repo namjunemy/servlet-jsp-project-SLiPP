@@ -1,5 +1,7 @@
 package io.namjune.user;
 
+import io.namjune.db.Database;
+
 public class User {
   private String userId;
   private String password;
@@ -28,6 +30,23 @@ public class User {
 
   public String getEmail() {
     return email;
+  }
+
+  public boolean matchPassword(String newPassword) {
+    return this.password.equals(newPassword);
+  }
+
+  public static boolean login(String userId, String password) throws UserNotFoundException, PasswordMismatchException {
+    User user = Database.findByUserId(userId);
+    if (user == null) {
+      throw new UserNotFoundException();
+    }
+
+    if (!user.matchPassword(password)) {
+      throw new PasswordMismatchException();
+    }
+
+    return true;
   }
 
   @Override
