@@ -2,8 +2,6 @@ package io.namjune.user;
 
 import java.sql.SQLException;
 
-import io.namjune.db.Database;
-
 public class User {
   private String userId;
   private String password;

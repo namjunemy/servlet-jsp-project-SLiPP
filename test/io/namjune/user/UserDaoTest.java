@@ -1,7 +1,6 @@
 package io.namjune.user;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -24,12 +23,20 @@ public class UserDaoTest {
   }
 
   @Test
-  public void addUser() throws SQLException {
-    userDao.addUser(UserTest.TEST_USER);
+  public void crud() throws SQLException {
+    User user = UserTest.TEST_USER;
+    userDao.removeUser(user.getUserId());
+    userDao.addUser(user);
+
+    User dbUser = userDao.findByUserId(user.getUserId());
+    assertEquals(user, dbUser);
   }
 
   @Test
-  public void findByUserId() throws Exception {
-    assertEquals(UserTest.TEST_USER, userDao.findByUserId("userId"));
+  public void findWhenNotExisted() throws Exception {
+    User user = UserTest.TEST_USER;
+    userDao.removeUser(user.getUserId());
+    User dbUser = userDao.findByUserId(user.getUserId());
+    assertNull(dbUser);
   }
 }
