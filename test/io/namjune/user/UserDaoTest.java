@@ -1,5 +1,6 @@
 package io.namjune.user;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.sql.Connection;
@@ -23,7 +24,12 @@ public class UserDaoTest {
   }
 
   @Test
-  public void insert() throws SQLException {
-    userDao.insert(UserTest.TEST_USER);
+  public void addUser() throws SQLException {
+    userDao.addUser(UserTest.TEST_USER);
+  }
+
+  @Test
+  public void findByUserId() throws Exception {
+    assertEquals(UserTest.TEST_USER, userDao.findByUserId("userId"));
   }
 }
