@@ -18,7 +18,7 @@
         </div>
 
 
-        <form class="form-horizontal" action="/login_action.jsp" method="post">
+        <form class="form-horizontal" action="/users/login" method="post">
           <%
           Object errorMessage = request.getAttribute("errorMessage");
           if (errorMessage != null) {
