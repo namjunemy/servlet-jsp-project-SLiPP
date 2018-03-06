@@ -69,7 +69,6 @@ public class UserDao {
       if (conn != null)
         conn.close();
     }
-
   }
 
   public void removeUser(String userId) throws SQLException {

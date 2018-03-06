@@ -12,37 +12,61 @@
       <div class="span12">
         <section id="typography">
         <div class="page-header">
-          <h1>회원가입</h1>
+          <c:choose>
+            <c:when test="${empty user.userId}">
+              <h1>회원가입</h1>
+            </c:when>
+            <c:otherwise>
+              <h1>개인정보수정</h1>
+            </c:otherwise>
+          </c:choose>
         </div>
-        
-        <form class="form-horizontal" action="/users/save" method="post">
+
+        <c:set var="actionUrl" value="/users/create" />
+        <c:if test="${not empty user.userId}">
+          <c:set var="actionUrl" value="/users/update" />
+        </c:if>
+
+        <form class="form-horizontal" action="${actionUrl}" method="post">
           <div class="control-group">
             <label class="control-label" for="userId">사용자 아이디</label>
             <div class="controls">
-              <input type="text" name="userId" value="" />
+              <c:choose>
+                <c:when test="${empty user.userId}">
+                  <input type="text" name="userId" value="" />
+                </c:when>
+                <c:otherwise>
+                  <input type="hidden" name="userId" value="${user.userId}" />
+                  <input type="text" name="userId" value="${user.userId}" disabled="true" />
+                </c:otherwise>
+              </c:choose>
             </div>
           </div>
           <div class="control-group">
             <label class="control-label" for="password">비밀번호</label>
             <div class="controls">
-              <input type="password" id="password" name="password" placeholder="">
+              <input type="password" id="password" name="password" value="${user.password}" placeholder="">
             </div>
           </div>
           <div class="control-group">
             <label class="control-label" for="name">이름</label>
             <div class="controls">
-              <input type="text" id="name" name="name" value="" placeholder="">
+              <input type="text" id="name" name="name" value="${user.name}" placeholder="">
             </div>
           </div>
           <div class="control-group">
             <label class="control-label" for="email">이메일</label>
             <div class="controls">
-              <input type="text" id="email" name="email" value="" placeholder="">
+              <input type="text" id="email" name="email" value="${user.email}" placeholder="">
             </div>
           </div>
           <div class="control-group">
             <div class="controls">
-              <button type="submit" class="btn btn-primary">회원가입</button>
+              <c:set var="buttonText" value="회원가입" />
+              <c:if test="${not empty user.userId}">
+                <c:set var="buttonText" value="수정" />
+              </c:if>
+              <button type="submit" class="btn btn-primary">${buttonText}</button>
             </div>
           </div>
         </form>
