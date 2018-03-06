@@ -13,21 +13,21 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/users/updateForm")
 public class UpdateFormUserServlet extends HttpServlet {
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    HttpSession session = req.getSession();
-    Object object = session.getAttribute(LoginServlet.SESSION_USER_ID);
-    if (object == null) {
-      resp.sendRedirect("/");
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    HttpSession session = request.getSession();
+    String userId = SessionUtils.getStringValue(session, LoginServlet.SESSION_USER_ID);
+    if (userId == null) {
+      response.sendRedirect("/");
       return;
     }
-    String userId = (String) object;
+
     System.out.println("User Id : " + userId);
     UserDao userDao = new UserDao();
     try {
       User user = userDao.findByUserId(userId);
-      req.setAttribute("user", user);
-      RequestDispatcher rd = req.getRequestDispatcher("/form.jsp");
-      rd.forward(req, resp);
+      request.setAttribute("user", user);
+      RequestDispatcher rd = request.getRequestDispatcher("/form.jsp");
+      rd.forward(request, response);
     } catch (Exception e) {
     }
   }
