@@ -2,13 +2,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-
 <%@ include file="./commons/_head.jspf"%>
-
 </head>
 <body>
   <%@ include file="./commons/_top.jspf"%>
-
+  
   <div class="container">
     <div class="row">
       <div class="span12">
