@@ -11,7 +11,7 @@ import com.google.gson.annotations.Expose;
 public class User {
   @Expose
   @NotNull
-  @Size(min = 4, max = 12)
+  @Size(min = 2, max = 12)
   private String userId;
 
   @Expose(serialize = false)
@@ -21,7 +21,7 @@ public class User {
 
   @Expose
   @NotNull
-  @Size(min = 4, max = 12)
+  @Size(min = 2, max = 12)
   private String name;
 
   @Expose
