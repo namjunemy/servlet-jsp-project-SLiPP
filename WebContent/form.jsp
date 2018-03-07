@@ -12,32 +12,34 @@
       <div class="span12">
         <section id="typography">
         <div class="page-header">
-          <c:choose>
-            <c:when test="${empty user.userId}">
-              <h1>회원가입</h1>
-            </c:when>
-            <c:otherwise>
-              <h1>개인정보수정</h1>
-            </c:otherwise>
-          </c:choose>
+          <c:set var="pageName" value="회원가입" />
+          <c:if test="${isUpdate}">
+            <c:set var="pageName" value="개인정보수정" />
+          </c:if>
+          <h1>${pageName}</h1>
         </div>
 
         <c:set var="actionUrl" value="/users/create" />
-        <c:if test="${not empty user.userId}">
+        <c:if test="${isUpdate}">
           <c:set var="actionUrl" value="/users/update" />
         </c:if>
 
         <form class="form-horizontal" action="${actionUrl}" method="post">
+          <c:if test="${not empty errorMessage}">
+            <div class="control-group">
+              <label class="error">${errorMessage}</label>
+            </div>
+          </c:if>
           <div class="control-group">
             <label class="control-label" for="userId">사용자 아이디</label>
             <div class="controls">
               <c:choose>
-                <c:when test="${empty user.userId}">
-                  <input type="text" name="userId" value="" />
-                </c:when>
-                <c:otherwise>
+                <c:when test="${isUpdate}">
                   <input type="hidden" name="userId" value="${user.userId}" />
                   <input type="text" name="userId" value="${user.userId}" disabled="true" />
+                </c:when>
+                <c:otherwise>
+                  <input type="text" name="userId" value="${user.userId}" />
                 </c:otherwise>
               </c:choose>
             </div>
@@ -62,11 +64,7 @@
           </div>
           <div class="control-group">
             <div class="controls">
-              <c:set var="buttonText" value="회원가입" />
-              <c:if test="${not empty user.userId}">
-                <c:set var="buttonText" value="수정" />
-              </c:if>
-              <button type="submit" class="btn btn-primary">${buttonText}</button>
+              <button type="submit" class="btn btn-primary">${pageName}</button>
             </div>
           </div>
         </form>
