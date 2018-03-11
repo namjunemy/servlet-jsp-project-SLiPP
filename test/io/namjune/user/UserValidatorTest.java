@@ -32,7 +32,7 @@ public class UserValidatorTest {
 
   @Test
   public void userIdLength() {
-    User user = new User("nj", "password", "name", "");
+    User user = new User("n", "password", "name", "");
     Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
     assertEquals(1, constraintViolations.size());
     System.out.println(constraintViolations.iterator().next().getMessage());
@@ -55,7 +55,7 @@ public class UserValidatorTest {
   public void invaildUser() {
     User user = new User("nj", "password", "name", "email");
     Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
-    assertEquals(2, constraintViolations.size());
+    assertEquals(1, constraintViolations.size());
     Iterator<ConstraintViolation<User>> violations = constraintViolations.iterator();
     while (violations.hasNext()) {
       ConstraintViolation<User> each = violations.next();
