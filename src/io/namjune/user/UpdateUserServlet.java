@@ -20,7 +20,6 @@ import io.namjune.support.MyValidatorFactory;
 public class UpdateUserServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    request.setCharacterEncoding("UTF-8");
     HttpSession session = request.getSession();
     String sessionUserId = SessionUtils.getStringValue(session, LoginServlet.SESSION_USER_ID);
 
