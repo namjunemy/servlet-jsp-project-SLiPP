@@ -14,10 +14,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.namjune.support.MyValidatorFactory;
 
 @WebServlet("/users/create")
 public class CreateUserServlet extends HttpServlet {
+  static final Logger logger = LoggerFactory.getLogger(CreateUserServlet.class);
+
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     String userId = request.getParameter("userId");
@@ -26,6 +31,9 @@ public class CreateUserServlet extends HttpServlet {
     String email = request.getParameter("email");
 
     User user = new User(userId, password, name, email);
+
+    logger.debug("User : {}", user);
+
     Validator validator = MyValidatorFactory.createValidator();
     Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
     if (constraintViolations.size() > 0) {
