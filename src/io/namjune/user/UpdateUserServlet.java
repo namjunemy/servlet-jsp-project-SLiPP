@@ -1,6 +1,7 @@
 package io.namjune.user;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -13,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+
+import org.apache.commons.beanutils.BeanUtilsBean;
 
 import io.namjune.support.MyValidatorFactory;
 
@@ -29,18 +32,20 @@ public class UpdateUserServlet extends HttpServlet {
       return;
     }
 
-    // 세션에 저장된 아이디가 아닌 다른 아이디의 수정이 이루어질 경우 보안 처리
-    String userId = request.getParameter("userId");
-    if (!sessionUserId.equals(userId)) {
+    User user = new User();
+
+    try {
+      BeanUtilsBean.getInstance().populate(user, request.getParameterMap());
+
+    } catch (IllegalAccessException | InvocationTargetException e) {
+      throw new ServletException(e);
+    }
+
+    if (!user.isSameUser(sessionUserId)) {
       response.sendRedirect("/");
       return;
     }
 
-    String password = request.getParameter("password");
-    String name = request.getParameter("name");
-    String email = request.getParameter("email");
-
-    User user = new User(userId, password, name, email);
     Validator validator = MyValidatorFactory.createValidator();
     Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
     if (constraintViolations.size() > 0) {
