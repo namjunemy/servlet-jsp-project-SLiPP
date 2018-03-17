@@ -2,3 +2,7 @@
 /tomcat.8080/
 .DS_Store
 /target/
+/.project
+/.settings/
+/.classpath
+/bin/
