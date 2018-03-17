@@ -5,8 +5,9 @@
     </encoder>
   </appender>
 
-  
-  <root level="debug">
+  <logger name="io.namjune" level="DEBUG" />
+
+  <root level="INFO">
     <appender-ref ref="STDOUT" />
   </root>
 </configuration>
