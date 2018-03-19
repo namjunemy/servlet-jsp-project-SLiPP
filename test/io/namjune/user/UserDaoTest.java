@@ -1,8 +1,8 @@
 package io.namjune.user;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.junit.Before;
@@ -14,12 +14,6 @@ public class UserDaoTest {
   @Before
   public void setup() {
     userDao = new UserDao();
-  }
-
-  @Test
-  public void connection() {
-    Connection con = userDao.getConnection();
-    assertNotNull(con);
   }
 
   @Test
