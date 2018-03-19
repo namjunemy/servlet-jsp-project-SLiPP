@@ -1,28 +1,13 @@
 package io.namjune.user;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import io.namjune.support.JdbcTemplate;
+import io.namjune.support.SelectJdbcTemplate;
 
 public class UserDao {
-  public Connection getConnection() {
-    String url = "jdbc:mysql://localhost:3306/slipp";
-    String id = "njkim";
-    String pw = "skawns123";
-
-    try {
-      Class.forName("com.mysql.jdbc.Driver");
-      return DriverManager.getConnection(url, id, pw);
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
-      return null;
-    }
-  }
-
   public void addUser(User user) throws SQLException {
     JdbcTemplate template = new JdbcTemplate() {
       @Override
@@ -38,31 +23,24 @@ public class UserDao {
   }
 
   public User findByUserId(String userId) throws SQLException {
-    String sql = "select * from USERS where userId = ?";
-
-    Connection conn = null;
-    PreparedStatement pstmt = null;
-    ResultSet rs = null;
-    try {
-      conn = getConnection();
-      pstmt = conn.prepareStatement(sql);
-      pstmt.setString(1, userId);
-
-      rs = pstmt.executeQuery();
-
-      if (!rs.next()) {
-        return null;
+    SelectJdbcTemplate template = new SelectJdbcTemplate() {
+      @Override
+      public void setParameters(PreparedStatement pstmt) throws SQLException {
+        pstmt.setString(1, userId);
       }
 
-      return new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"), rs.getString("email"));
-    } finally {
-      if (rs != null)
-        rs.close();
-      if (pstmt != null)
-        pstmt.close();
-      if (conn != null)
-        conn.close();
-    }
+      @Override
+      public User mapRow(ResultSet rs) throws SQLException {
+        if (!rs.next()) {
+          return null;
+        }
+
+        return new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"), rs.getString("email"));
+      }
+    };
+
+    String sql = "select * from USERS where userId = ?";
+    return (User) template.executeQuery(sql);
   }
 
   public void removeUser(String userId) throws SQLException {
