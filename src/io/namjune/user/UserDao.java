@@ -2,6 +2,7 @@ package io.namjune.user;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import io.namjune.support.JdbcTemplate;
 import io.namjune.support.RowMapper;
@@ -36,5 +37,18 @@ public class UserDao {
     JdbcTemplate template = new JdbcTemplate();
     String sql = "update USERS set password = ?, name = ?, email = ? where userId = ?";
     template.executeUpdate(sql, user.getPassword(), user.getName(), user.getEmail(), user.getUserId());
+  }
+
+  public List<User> findUsers() throws SQLException {
+    RowMapper<User> rm = new RowMapper<User>() {
+      @Override
+      public User mapRow(ResultSet rs) throws SQLException {
+        return new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"), rs.getString("email"));
+      }
+    };
+
+    JdbcTemplate template = new JdbcTemplate();
+    String sql = "select * from USERS";
+    return template.list(sql, rm);
   }
 }
