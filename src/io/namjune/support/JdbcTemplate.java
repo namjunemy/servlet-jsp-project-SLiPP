@@ -23,7 +23,11 @@ public class JdbcTemplate {
     }
   }
 
-  public <T> T executeQuery(String sql, PreparedStatementSetter pss, RowMapper<T> rm) throws SQLException {
+  public void executeUpdate(String sql, Object... parameters) throws SQLException {
+    executeUpdate(sql, createPreparedStatementSetter(parameters));
+  }
+
+  public <T> T executeQuery(String sql, RowMapper<T> rm, PreparedStatementSetter pss) throws SQLException {
     Connection conn = null;
     PreparedStatement pstmt = null;
     ResultSet rs = null;
@@ -46,5 +50,20 @@ public class JdbcTemplate {
       if (conn != null)
         conn.close();
     }
+  }
+
+  public <T> T executeQuery(String sql, RowMapper<T> rm, Object... parameters) throws SQLException {
+    return executeQuery(sql, rm, createPreparedStatementSetter(parameters));
+  }
+
+  private PreparedStatementSetter createPreparedStatementSetter(Object... parameters) {
+    return new PreparedStatementSetter() {
+      @Override
+      public void setParameters(PreparedStatement pstmt) throws SQLException {
+        for (int i = 0; i < parameters.length; i++) {
+          pstmt.setObject(i + 1, parameters[i]);
+        }
+      }
+    };
   }
 }
