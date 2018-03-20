@@ -33,16 +33,16 @@ public class UserDao {
       }
     };
 
-    RowMapper rm = new RowMapper() {
+    RowMapper<User> rm = new RowMapper<User>() {
       @Override
-      public Object mapRow(ResultSet rs) throws SQLException {
+      public User mapRow(ResultSet rs) throws SQLException {
         return new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"), rs.getString("email"));
       }
     };
 
     JdbcTemplate template = new JdbcTemplate();
     String sql = "select * from USERS where userId = ?";
-    return (User) template.executeQuery(sql, pss, rm);
+    return template.executeQuery(sql, pss, rm);
   }
 
   public void removeUser(String userId) throws SQLException {
