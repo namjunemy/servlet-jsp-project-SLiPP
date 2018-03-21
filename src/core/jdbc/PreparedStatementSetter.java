@@ -1,4 +1,4 @@
-package io.namjune.core.jdbc;
+package core.jdbc;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

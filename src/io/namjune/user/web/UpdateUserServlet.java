@@ -17,8 +17,8 @@ import javax.validation.Validator;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
 
-import io.namjune.core.MyValidatorFactory;
-import io.namjune.core.SessionUtils;
+import core.MyValidatorFactory;
+import core.SessionUtils;
 import io.namjune.user.User;
 import io.namjune.user.UserDao;
 

@@ -2,8 +2,8 @@ package io.namjune.user;
 
 import java.util.List;
 
-import io.namjune.core.jdbc.JdbcTemplate;
-import io.namjune.core.jdbc.RowMapper;
+import core.jdbc.JdbcTemplate;
+import core.jdbc.RowMapper;
 
 public class UserDao {
   public void addUser(User user) {

@@ -6,7 +6,7 @@ import java.sql.Connection;
 
 import org.junit.Test;
 
-import io.namjune.core.jdbc.ConnectionManager;
+import core.jdbc.ConnectionManager;
 
 public class ConnectionManagerTest {
   @Test

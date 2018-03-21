@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.namjune.core.SessionUtils;
+import core.SessionUtils;
 import io.namjune.user.User;
 import io.namjune.user.UserDao;
 

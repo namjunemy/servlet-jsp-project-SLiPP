@@ -1,4 +1,4 @@
-package io.namjune.core.jdbc;
+package core.jdbc;
 
 public class DataAccessException extends RuntimeException {
 

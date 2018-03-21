@@ -18,7 +18,7 @@ import org.apache.commons.beanutils.BeanUtilsBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.namjune.core.MyValidatorFactory;
+import core.MyValidatorFactory;
 import io.namjune.user.User;
 import io.namjune.user.UserDao;
 
