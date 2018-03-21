@@ -1,7 +1,5 @@
 package io.namjune.user;
 
-import java.sql.SQLException;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -86,12 +84,7 @@ public class User {
 
   public static boolean login(String userId, String password) throws UserNotFoundException, PasswordMismatchException {
     UserDao userDao = new UserDao();
-    User user = null;
-    try {
-      user = userDao.findByUserId(userId);
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
+    User user = userDao.findByUserId(userId);
 
     if (user == null) {
       throw new UserNotFoundException();

@@ -2,7 +2,6 @@ package io.namjune.user;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -53,11 +52,7 @@ public class CreateUserServlet extends HttpServlet {
     }
 
     UserDao userDao = new UserDao();
-    try {
-      userDao.addUser(user);
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
+    userDao.addUser(user);
 
     response.sendRedirect("/");
   }

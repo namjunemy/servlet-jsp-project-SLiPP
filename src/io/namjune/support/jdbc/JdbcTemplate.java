@@ -1,4 +1,4 @@
-package io.namjune.support;
+package io.namjune.support.jdbc;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JdbcTemplate {
-  public void executeUpdate(String sql, PreparedStatementSetter pss) throws SQLException {
+  public void executeUpdate(String sql, PreparedStatementSetter pss) {
     Connection conn = null;
     PreparedStatement pstmt = null;
     try {
@@ -17,19 +17,25 @@ public class JdbcTemplate {
       pss.setParameters(pstmt);
 
       pstmt.executeUpdate();
+    } catch (SQLException e) {
+      throw new DataAccessException(e);
     } finally {
-      if (pstmt != null)
-        pstmt.close();
-      if (conn != null)
-        conn.close();
+      try {
+        if (pstmt != null)
+          pstmt.close();
+        if (conn != null)
+          conn.close();
+      } catch (SQLException e) {
+        throw new DataAccessException(e);
+      }
     }
   }
 
-  public void executeUpdate(String sql, Object... parameters) throws SQLException {
+  public void executeUpdate(String sql, Object... parameters) {
     executeUpdate(sql, createPreparedStatementSetter(parameters));
   }
 
-  public <T> T executeQuery(String sql, RowMapper<T> rm, PreparedStatementSetter pss) throws SQLException {
+  public <T> T executeQuery(String sql, RowMapper<T> rm, PreparedStatementSetter pss) {
     List<T> list = list(sql, rm, pss);
     if (list.isEmpty()) {
       return null;
@@ -37,11 +43,11 @@ public class JdbcTemplate {
     return list.get(0);
   }
 
-  public <T> T executeQuery(String sql, RowMapper<T> rm, Object... parameters) throws SQLException {
+  public <T> T executeQuery(String sql, RowMapper<T> rm, Object... parameters) {
     return executeQuery(sql, rm, createPreparedStatementSetter(parameters));
   }
 
-  public <T> List<T> list(String sql, RowMapper<T> rm, PreparedStatementSetter pss) throws SQLException {
+  public <T> List<T> list(String sql, RowMapper<T> rm, PreparedStatementSetter pss) throws DataAccessException {
     Connection conn = null;
     PreparedStatement pstmt = null;
     ResultSet rs = null;
@@ -58,17 +64,23 @@ public class JdbcTemplate {
       }
 
       return list;
+    } catch (SQLException e) {
+      throw new DataAccessException(e);
     } finally {
-      if (rs != null)
-        rs.close();
-      if (pstmt != null)
-        pstmt.close();
-      if (conn != null)
-        conn.close();
+      try {
+        if (rs != null)
+          rs.close();
+        if (pstmt != null)
+          pstmt.close();
+        if (conn != null)
+          conn.close();
+      } catch (SQLException e) {
+        throw new DataAccessException(e);
+      }
     }
   }
 
-  public <T> List<T> list(String sql, RowMapper<T> rm, Object... parameters) throws SQLException {
+  public <T> List<T> list(String sql, RowMapper<T> rm, Object... parameters) {
     return list(sql, rm, createPreparedStatementSetter(parameters));
   }
 

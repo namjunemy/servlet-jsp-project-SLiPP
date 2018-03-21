@@ -1,4 +1,4 @@
-package io.namjune.user;
+package io.namjune.support;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -6,7 +6,7 @@ import java.sql.Connection;
 
 import org.junit.Test;
 
-import io.namjune.support.ConnectionManager;
+import io.namjune.support.jdbc.ConnectionManager;
 
 public class ConnectionManagerTest {
   @Test

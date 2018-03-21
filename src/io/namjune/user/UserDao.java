@@ -4,17 +4,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import io.namjune.support.JdbcTemplate;
-import io.namjune.support.RowMapper;
+import io.namjune.support.jdbc.JdbcTemplate;
+import io.namjune.support.jdbc.RowMapper;
 
 public class UserDao {
-  public void addUser(User user) throws SQLException {
+  public void addUser(User user) {
     JdbcTemplate template = new JdbcTemplate();
     String sql = "insert into USERS values(?, ?, ?, ?)";
     template.executeUpdate(sql, user.getUserId(), user.getPassword(), user.getName(), user.getEmail());
   }
 
-  public User findByUserId(String userId) throws SQLException {
+  public User findByUserId(String userId) {
     RowMapper<User> rm = new RowMapper<User>() {
       @Override
       public User mapRow(ResultSet rs) throws SQLException {
@@ -27,19 +27,19 @@ public class UserDao {
     return template.executeQuery(sql, rm, userId);
   }
 
-  public void removeUser(String userId) throws SQLException {
+  public void removeUser(String userId) {
     JdbcTemplate template = new JdbcTemplate();
     String sql = "delete from USERS where userId = ?";
     template.executeUpdate(sql, userId);
   }
 
-  public void updateUser(User user) throws SQLException {
+  public void updateUser(User user) {
     JdbcTemplate template = new JdbcTemplate();
     String sql = "update USERS set password = ?, name = ?, email = ? where userId = ?";
     template.executeUpdate(sql, user.getPassword(), user.getName(), user.getEmail(), user.getUserId());
   }
 
-  public List<User> findUsers() throws SQLException {
+  public List<User> findUsers() {
     RowMapper<User> rm = new RowMapper<User>() {
       @Override
       public User mapRow(ResultSet rs) throws SQLException {

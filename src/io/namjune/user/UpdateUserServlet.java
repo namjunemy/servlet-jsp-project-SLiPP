@@ -62,11 +62,10 @@ public class UpdateUserServlet extends HttpServlet {
       forwardJSP(request, response, errorMessage);
       return;
     }
+
     UserDao userDao = new UserDao();
-    try {
-      userDao.updateUser(user);
-    } catch (Exception e) {
-    }
+    userDao.updateUser(user);
+
     response.sendRedirect("/");
   }
 

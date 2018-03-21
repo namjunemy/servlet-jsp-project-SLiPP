@@ -2,7 +2,6 @@ package io.namjune.user;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,20 +23,18 @@ public class ApiFindUserServlet extends HttpServlet {
     }
 
     UserDao userDao = new UserDao();
-    try {
-      User user = userDao.findByUserId(userId);
-      if (user == null)
-        return;
-      final GsonBuilder builder = new GsonBuilder();
-      builder.excludeFieldsWithoutExposeAnnotation();
-      final Gson gson = builder.create();
 
-      String jsonData = gson.toJson(user);
-      resp.setContentType("application/json;charset=UTF-8");
+    User user = userDao.findByUserId(userId);
+    if (user == null)
+      return;
+    final GsonBuilder builder = new GsonBuilder();
+    builder.excludeFieldsWithoutExposeAnnotation();
+    final Gson gson = builder.create();
 
-      PrintWriter out = resp.getWriter();
-      out.print(jsonData);
-    } catch (SQLException e) {
-    }
+    String jsonData = gson.toJson(user);
+    resp.setContentType("application/json;charset=UTF-8");
+
+    PrintWriter out = resp.getWriter();
+    out.print(jsonData);
   }
 }

@@ -1,4 +1,4 @@
-package io.namjune.support;
+package io.namjune.support.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
