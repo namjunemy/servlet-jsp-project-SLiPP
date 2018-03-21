@@ -1,7 +1,5 @@
 package io.namjune.user;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 import io.namjune.support.jdbc.JdbcTemplate;
@@ -15,12 +13,12 @@ public class UserDao {
   }
 
   public User findByUserId(String userId) {
-    RowMapper<User> rm = new RowMapper<User>() {
-      @Override
-      public User mapRow(ResultSet rs) throws SQLException {
-        return new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"), rs.getString("email"));
-      }
-    };
+    RowMapper<User> rm = rs ->
+      new User(
+          rs.getString("userId"),
+          rs.getString("password"),
+          rs.getString("name"),
+          rs.getString("email"));
 
     JdbcTemplate template = new JdbcTemplate();
     String sql = "select * from USERS where userId = ?";
@@ -40,12 +38,12 @@ public class UserDao {
   }
 
   public List<User> findUsers() {
-    RowMapper<User> rm = new RowMapper<User>() {
-      @Override
-      public User mapRow(ResultSet rs) throws SQLException {
-        return new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"), rs.getString("email"));
-      }
-    };
+    RowMapper<User> rm = rs ->
+      new User(
+          rs.getString("userId"),
+          rs.getString("password"),
+          rs.getString("name"),
+          rs.getString("email"));
 
     JdbcTemplate template = new JdbcTemplate();
     String sql = "select * from USERS";
