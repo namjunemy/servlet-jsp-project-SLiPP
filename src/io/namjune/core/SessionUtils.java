@@ -1,4 +1,4 @@
-package io.namjune.user;
+package io.namjune.core;
 
 import javax.servlet.http.HttpSession;
 

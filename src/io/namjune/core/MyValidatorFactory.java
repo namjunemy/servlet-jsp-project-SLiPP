@@ -1,4 +1,4 @@
-package io.namjune.support;
+package io.namjune.core;
 
 import javax.validation.Validation;
 import javax.validation.Validator;

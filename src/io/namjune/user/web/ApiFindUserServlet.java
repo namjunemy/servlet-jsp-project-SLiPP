@@ -1,8 +1,7 @@
-package io.namjune.user;
+package io.namjune.user.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import io.namjune.user.User;
+import io.namjune.user.UserDao;
 
 @WebServlet("/api/users/find")
 public class ApiFindUserServlet extends HttpServlet {
@@ -24,20 +26,18 @@ public class ApiFindUserServlet extends HttpServlet {
     }
 
     UserDao userDao = new UserDao();
-    try {
-      User user = userDao.findByUserId(userId);
-      if (user == null)
-        return;
-      final GsonBuilder builder = new GsonBuilder();
-      builder.excludeFieldsWithoutExposeAnnotation();
-      final Gson gson = builder.create();
 
-      String jsonData = gson.toJson(user);
-      resp.setContentType("application/json;charset=UTF-8");
+    User user = userDao.findByUserId(userId);
+    if (user == null)
+      return;
+    final GsonBuilder builder = new GsonBuilder();
+    builder.excludeFieldsWithoutExposeAnnotation();
+    final Gson gson = builder.create();
 
-      PrintWriter out = resp.getWriter();
-      out.print(jsonData);
-    } catch (SQLException e) {
-    }
+    String jsonData = gson.toJson(user);
+    resp.setContentType("application/json;charset=UTF-8");
+
+    PrintWriter out = resp.getWriter();
+    out.print(jsonData);
   }
 }

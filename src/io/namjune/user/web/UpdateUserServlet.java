@@ -1,4 +1,4 @@
-package io.namjune.user;
+package io.namjune.user.web;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -17,7 +17,10 @@ import javax.validation.Validator;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
 
-import io.namjune.support.MyValidatorFactory;
+import io.namjune.core.MyValidatorFactory;
+import io.namjune.core.SessionUtils;
+import io.namjune.user.User;
+import io.namjune.user.UserDao;
 
 @WebServlet("/users/update")
 public class UpdateUserServlet extends HttpServlet {
@@ -62,11 +65,10 @@ public class UpdateUserServlet extends HttpServlet {
       forwardJSP(request, response, errorMessage);
       return;
     }
+
     UserDao userDao = new UserDao();
-    try {
-      userDao.updateUser(user);
-    } catch (Exception e) {
-    }
+    userDao.updateUser(user);
+
     response.sendRedirect("/");
   }
 

@@ -1,4 +1,4 @@
-package io.namjune.user;
+package io.namjune.user.web;
 
 import java.io.IOException;
 
@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import io.namjune.user.PasswordMismatchException;
+import io.namjune.user.User;
+import io.namjune.user.UserNotFoundException;
 
 @WebServlet("/users/login")
 public class LoginServlet extends HttpServlet {

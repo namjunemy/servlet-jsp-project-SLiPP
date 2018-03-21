@@ -1,4 +1,4 @@
-package io.namjune.user;
+package io.namjune.user.web;
 
 import java.io.IOException;
 
@@ -12,6 +12,10 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import io.namjune.core.SessionUtils;
+import io.namjune.user.User;
+import io.namjune.user.UserDao;
 
 @WebServlet("/users/updateForm")
 public class UpdateFormUserServlet extends HttpServlet {
@@ -28,13 +32,10 @@ public class UpdateFormUserServlet extends HttpServlet {
 
     logger.debug("User Id : {}", userId);
     UserDao userDao = new UserDao();
-    try {
-      User user = userDao.findByUserId(userId);
-      request.setAttribute("isUpdate", true);
-      request.setAttribute("user", user);
-      RequestDispatcher rd = request.getRequestDispatcher("/form.jsp");
-      rd.forward(request, response);
-    } catch (Exception e) {
-    }
+    User user = userDao.findByUserId(userId);
+    request.setAttribute("isUpdate", true);
+    request.setAttribute("user", user);
+    RequestDispatcher rd = request.getRequestDispatcher("/form.jsp");
+    rd.forward(request, response);
   }
 }

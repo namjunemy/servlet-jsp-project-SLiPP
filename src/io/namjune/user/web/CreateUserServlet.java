@@ -1,8 +1,7 @@
-package io.namjune.user;
+package io.namjune.user.web;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -19,7 +18,9 @@ import org.apache.commons.beanutils.BeanUtilsBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.namjune.support.MyValidatorFactory;
+import io.namjune.core.MyValidatorFactory;
+import io.namjune.user.User;
+import io.namjune.user.UserDao;
 
 @WebServlet("/users/create")
 public class CreateUserServlet extends HttpServlet {
@@ -53,11 +54,7 @@ public class CreateUserServlet extends HttpServlet {
     }
 
     UserDao userDao = new UserDao();
-    try {
-      userDao.addUser(user);
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
+    userDao.addUser(user);
 
     response.sendRedirect("/");
   }
