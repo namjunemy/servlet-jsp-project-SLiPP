@@ -1,4 +1,4 @@
-package io.namjune.user;
+package io.namjune.user.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import io.namjune.user.User;
+import io.namjune.user.UserDao;
 
 @WebServlet("/api/users/find")
 public class ApiFindUserServlet extends HttpServlet {

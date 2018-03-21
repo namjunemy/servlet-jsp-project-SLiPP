@@ -1,4 +1,4 @@
-package io.namjune.user;
+package io.namjune.user.web;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -11,33 +11,48 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import io.namjune.support.MyValidatorFactory;
+import io.namjune.core.MyValidatorFactory;
+import io.namjune.core.SessionUtils;
+import io.namjune.user.User;
+import io.namjune.user.UserDao;
 
-@WebServlet("/users/create")
-public class CreateUserServlet extends HttpServlet {
-  static final Logger logger = LoggerFactory.getLogger(CreateUserServlet.class);
-
+@WebServlet("/users/update")
+public class UpdateUserServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    User user = new User();
-    try {
-      BeanUtilsBean.getInstance().populate(user, request.getParameterMap());
-    } catch (IllegalAccessException | InvocationTargetException e1) {
-      throw new ServletException(e1);
+    HttpSession session = request.getSession();
+    String sessionUserId = SessionUtils.getStringValue(session, LoginServlet.SESSION_USER_ID);
+
+    // 세션을 가지고 있지않은 경우 보안 처리
+    if (sessionUserId == null) {
+      response.sendRedirect("/");
+      return;
     }
 
-    logger.debug("User : {}", user);
+    User user = new User();
+
+    try {
+      BeanUtilsBean.getInstance().populate(user, request.getParameterMap());
+
+    } catch (IllegalAccessException | InvocationTargetException e) {
+      throw new ServletException(e);
+    }
+
+    if (!user.isSameUser(sessionUserId)) {
+      response.sendRedirect("/");
+      return;
+    }
 
     Validator validator = MyValidatorFactory.createValidator();
     Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
     if (constraintViolations.size() > 0) {
+      request.setAttribute("isUpdate", true);
       request.setAttribute("user", user);
 
       Iterator<ConstraintViolation<User>> violations = constraintViolations.iterator();
@@ -52,7 +67,7 @@ public class CreateUserServlet extends HttpServlet {
     }
 
     UserDao userDao = new UserDao();
-    userDao.addUser(user);
+    userDao.updateUser(user);
 
     response.sendRedirect("/");
   }
