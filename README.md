@@ -80,3 +80,62 @@ SLiPP - Servlet/JSP 사용자 관리 시스템 구현 프로젝트를 통해 학
   * github에 issue 등록
   * 마일스톤 관리 및 이슈 관리
 
+## 06. Validator 적용 및 Maven 빌드 도구
+
+* Validator 라이브러리 설치, 적용, 테스트
+  * hibernate validator 라이브러리 적용
+  * 단위 테스트를 활용해 java validator 학습
+* 회원가입 Servlet(CreateUserServlet)에 Validator 적용
+* Maven 프로젝트 디렉토리 구조 학습
+* eclipse effective pom 탭을 통해 Maven 부모 pom 학습
+* Maven 기본 명령어 complies/test/package 학습
+* Maven phase, goal 관계 학습
+* Compiler 플러그인과 eclipse 플러그인 재정의 및 빌드
+* eclipse에서 효율적으로 Maven goal 실행하기
+* 프로젝트에 Maven 적용
+  * 기존의 많은 소스코드를 git에 공유하지 않아도 된다. 특히 이클립스 관련 설정과 jar 라이브러리의 제외는 큰 장점이다.
+
+## 07. 자바 웹 애플리케이션 배포 및 Logging Framework
+
+* 서블릿 컨테이너 및 Tomcat 디렉토리 구조 학습
+  * CLI 환경에서 Tomcat 구동, 종료
+  * tail 명령어를 활용한 로그 확인
+* Maven package 명령을 통해 war파일 생성
+  * war 파일 생성을 위한 설정(태그)
+  * war 파일을 Tomcat 서버에 배포
+* Tomcat context 설정
+  * Tomcat의 webapps 디렉토리에 웹 애플리케이션을 바로 배포할 수 있다.
+  * 다른 방법은 conf/server.xml 설정을 추가해서 임이의 디렉토리에 있는 웹 애플리케이션을 배포할 수 있다.
+  * Maven finalName 설정 태그
+  * server.xml에서 tomcat context 설정
+  * 개발 서버에서 웹 애플리케이션 배포시 디렉토리 구조
+* [개발 서버에 소스 코드 배포 과정에 대한 자동화](http://ict-nroo.tistory.com/67)
+  * 소스 코드를 빌드/배포하는 과정에서 수 많은 반복 작업이 발생한다. 반복 작업은 자동화하는 것이 가장 안전하다.
+  * 배포 과정에서 발생하는 반복 과정에 대한 인지
+  * 쉘 스크립트를 이용해 배포 과정을 자동화
+* [Logging Framework 개념 및 설정](http://ict-nroo.tistory.com/68)
+  * System.out.println()을 사용하는 것의 문제점 인식
+  * Logging Framework이 필요한 이유
+  * Logging Framework 설정
+  * Logging Level 학습
+  * 패키지별 Logging Framework 설정
+  * Debug 메세지 구현시 주의할 점
+
+## 08. DAO 리팩토링
+
+* DAO의 insert, update, delete 중복 제거
+  * 라이브러리 코드와 개발자가 구현해야 하는 코드를 분리
+  * abstract 키워드를 활용해 추상 클래스 구현
+  * 익명 클래스 사용
+* select 중복 제거
+  * 쿼리에 대한 중복 코드 제거
+  * getConnection 메소드 중복 제거 및 테스트 코드 수정
+* TemplateMethod 패턴을 활용해서 JdbcTemplate 통합
+  * TemplateMethod 패턴을 활용할 때의 문제점 인지
+  * 각 Method를 interface로 분리해서 통합
+* 자바 Generic을 활용해 캐스팅을 하지 않도록 라이브러리 구현
+* 여러 건의 데이터를 조회할 수 있는 list() 기능 추가
+* SQLException(Checked Exception)을 DataAccessException(Unchecked Exception)으로 래핑
+  * Checked Exception과 Unchecked Exception의 개념
+  * SQLException을 Unchecked Exception으로 변환
+* 람다 표현식을 사용하도록 리팩토링
