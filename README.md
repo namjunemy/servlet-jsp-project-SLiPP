@@ -2,6 +2,8 @@
 
 SLiPP - Servlet/JSP 사용자 관리 시스템 구현 프로젝트를 통해 학습한 내용 상세 정리
 
+branch 별 commit 로그를 통해서 내용 확인
+
 ## 01. 개발 환경 세팅 및 Servlet 기본
 
 * Embedded Tomcat 버전 설치 및 설정
@@ -12,12 +14,17 @@ SLiPP - Servlet/JSP 사용자 관리 시스템 구현 프로젝트를 통해 학
 
 ## 02. 회원가입 페이지 분석 및 JSP
 
+[branch/chapter02 commits](https://github.com/namjunemy/servlet_jsp_project_SLiPP/tree/chapter02)
+
 * 회원가입 페이지 요구사항 분석
-* JSP include구문 활용 중복 제거, HTTP GET/POST
+* JSP include구문 활용 중복 제거
+* HTTP GET/POST
 * 데이터 저장을 위한 DB 객체 생성, VO생성
 * sendRedirect를 활용한 페이지 이동
 
 ## 03. 회원가입 기능 구현 및 JSP2
+
+[branch/chapter03 commits](https://github.com/namjunemy/servlet_jsp_project_SLiPP/tree/chapter03)
 
 * 단위 테스트 기반 개발
   * test source folder추가
@@ -38,6 +45,8 @@ SLiPP - Servlet/JSP 사용자 관리 시스템 구현 프로젝트를 통해 학
 
 ## 04. 데이터베이스 연동
 
+[branch/chapter04 commits](https://github.com/namjunemy/servlet_jsp_project_SLiPP/tree/chapter04)
+
 * JDBC 설치 및 학습
   * DB와 테이블 생성
   * JDBC 드라이버 설치
@@ -50,6 +59,8 @@ SLiPP - Servlet/JSP 사용자 관리 시스템 구현 프로젝트를 통해 학
   * JUnit 단위 테스트 코드 작성
 
 ## 05. 회원가입 기능 구현 지속 및 코드 리팩토링
+
+[branch/chapter05 commits](https://github.com/namjunemy/servlet_jsp_project_SLiPP/tree/chapter05)
 
 * 개인 정보 수정 폼 개발
   * JSP에서 자바 빈 데이터를 가져올 때의 규칙 이해
@@ -82,6 +93,8 @@ SLiPP - Servlet/JSP 사용자 관리 시스템 구현 프로젝트를 통해 학
 
 ## 06. Validator 적용 및 Maven 빌드 도구
 
+[branch/chapter06 commits](https://github.com/namjunemy/servlet_jsp_project_SLiPP/tree/chapter06)
+
 * Validator 라이브러리 설치, 적용, 테스트
   * hibernate validator 라이브러리 적용
   * 단위 테스트를 활용해 java validator 학습
@@ -96,6 +109,8 @@ SLiPP - Servlet/JSP 사용자 관리 시스템 구현 프로젝트를 통해 학
   * 기존의 많은 소스코드를 git에 공유하지 않아도 된다. 특히 이클립스 관련 설정과 jar 라이브러리의 제외는 큰 장점이다.
 
 ## 07. 자바 웹 애플리케이션 배포 및 Logging Framework
+
+[branch/chapter07 commits](https://github.com/namjunemy/servlet_jsp_project_SLiPP/tree/chapter07)
 
 * 서블릿 컨테이너 및 Tomcat 디렉토리 구조 학습
   * CLI 환경에서 Tomcat 구동, 종료
@@ -123,6 +138,8 @@ SLiPP - Servlet/JSP 사용자 관리 시스템 구현 프로젝트를 통해 학
 
 ## 08. DAO 리팩토링
 
+[branch/chapter08 commits](https://github.com/namjunemy/servlet_jsp_project_SLiPP/tree/chapter08)
+
 * DAO의 insert, update, delete 중복 제거
   * 라이브러리 코드와 개발자가 구현해야 하는 코드를 분리
   * abstract 키워드를 활용해 추상 클래스 구현
@@ -139,3 +156,5 @@ SLiPP - Servlet/JSP 사용자 관리 시스템 구현 프로젝트를 통해 학
   * Checked Exception과 Unchecked Exception의 개념
   * SQLException을 Unchecked Exception으로 변환
 * 람다 표현식을 사용하도록 리팩토링
+  * RowMapper에 FunctionalInterface 어노테이션 설정
+  * RowMapper를 사용할 때 람다 표현식을 사용하도록 리팩토링
